@@ -22,11 +22,11 @@ class LoginUI extends StatelessWidget{
 
 
 
-BuildContext context;
+
   @override
   Widget build(BuildContext context) {
 
-    context = context;
+
 
 
     return Scaffold(
@@ -46,7 +46,7 @@ BuildContext context;
               label: Text("Login"), onPressed: () {
 
               if(snapshot.data)
-              _submitPhoneNumber(_controllerPhoneNumber.text);
+              _submitPhoneNumber(context,_controllerPhoneNumber.text);
 
             },);
           }
@@ -133,7 +133,8 @@ BuildContext context;
 
 
 
-  Future<void> _submitPhoneNumber(String phone) async {
+  Future<void> _submitPhoneNumber(BuildContext context,String phone)
+  async {
 
     String phoneNumber = "+91 " + phone;
 
@@ -142,8 +143,8 @@ BuildContext context;
      }
      void codeSent(String verificationId, [int code]) {
 
-      print('codeSent $verificationId');
-      context.open(OtpUI(phoneNumber: phone,));
+      print('codeSent ___  $verificationId');
+      context.openReplace(OtpUI(phoneNumber: phone,verificationID: verificationId,));
 
     }
     void codeAutoRetrievalTimeout(String verificationId) {
@@ -158,7 +159,9 @@ BuildContext context;
       verificationCompleted: verificationCompleted,
        /// This is called after the OTP is sent. Gives a `verificationId` and `code`
       codeSent: codeSent,
-     codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
+     codeAutoRetrievalTimeout: codeAutoRetrievalTimeout, verificationFailed: (AuthException error) {
+        print("Error printed ${error.message}");
+    },
     ); // All the callbacks are above
   }
 

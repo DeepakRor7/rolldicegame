@@ -1,18 +1,22 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rolldicegame/ui/login/LoginUI.dart';
 import 'package:rolldicegame/ui/login/bloc/ValidationBloc.dart';
 
 import 'package:rolldicegame/utils/AppConstants.dart';
+import 'package:rolldicegame/utils/SessionUtils.dart';
 
 class OtpUI  extends StatelessWidget{
 
 
   final String phoneNumber;
-  OtpUI({Key key, this.phoneNumber}) : super(key: key);
+  final String verificationID;
+  OtpUI({Key key, this.phoneNumber, this.verificationID}) : super(key: key);
 
-  final TextEditingController _controllerPhoneNumber =
+  final TextEditingController _controllerOTP =
   TextEditingController();
+  AuthCredential _phoneAuthCredential;
 
 
   var validBloc = ValidationBloc();
@@ -35,6 +39,8 @@ class OtpUI  extends StatelessWidget{
 
                 label: Text("Verify Mobile"), onPressed: () {
 
+                  if(snapshot.data)
+                    _submitOTP();
 
 
               },);
@@ -80,7 +86,7 @@ class OtpUI  extends StatelessWidget{
                     Container(
                       width: MediaQuery.of(context).size.width - 134,
                       child: TextField(
-                        controller: _controllerPhoneNumber,
+                        controller: _controllerOTP,
                         keyboardType: TextInputType.number,
                         onChanged: (t){
                           validBloc.validateOTP(t);
@@ -114,6 +120,46 @@ class OtpUI  extends StatelessWidget{
 
 
 
+  void _submitOTP() async{
+    /// get the `smsCode` from the user
+    String smsCode =_controllerOTP.text.toString().trim();
+
+    /// when used different phoneNumber other than the current (running) device
+    /// we need to use OTP to get `phoneAuthCredential` which is inturn used to signIn/login
+    this._phoneAuthCredential =  PhoneAuthProvider.getCredential(
+        verificationId: verificationID, smsCode: smsCode);
+
+    _login();
+
+  }
+
+  /// This method is used to login the user
+  /// `AuthCredential`(`_phoneAuthCredential`) is needed for the signIn method
+  /// After the signIn method from `AuthResult` we can get `FirebaserUser`(`_firebaseUser`)
+
+  Future<void> _login() async {
+    try {
+      await FirebaseAuth.instance
+          .signInWithCredential(this._phoneAuthCredential)
+          .then((AuthResult authRes) {
+        FirebaseUser  _firebaseUser = authRes.user;
+
+        print(_firebaseUser.phoneNumber);
+
+
+
+
+
+
+
+
+      });
+
+    } catch (e) {
+
+      print(e.toString());
+    }
+  }
 
 
 
