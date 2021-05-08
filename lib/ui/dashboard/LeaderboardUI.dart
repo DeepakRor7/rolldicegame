@@ -27,7 +27,14 @@ class LeaderScoreBoardUI extends StatelessWidget{
 
   }
 
-Widget  viewLeaderView(BuildContext context) {
+
+ // Handle the view by getting score board if their are
+//  scores then list View render all the results
+  //
+
+
+
+Widget viewLeaderView(BuildContext context) {
 
 
     return StreamBuilder<List<ModelLeaderBoard>>(
@@ -53,7 +60,7 @@ Widget  viewLeaderView(BuildContext context) {
             );
 
           },itemCount: snapshot.data.length,),
-        ) : context.logoIconWidget(title: "Loading");
+        ) : context.logoIconWidget();
       }
     );
 

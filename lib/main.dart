@@ -47,11 +47,9 @@ class SplashState extends State<Splash>{
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-
-
-    isUserLoggedIn() async {
+  isUserLoggedIn() async {
     var user = await _firebaseAuth.currentUser();
-    print(user);
+
     if(user != null){
 
       context.openReplace(DashboardUI());
@@ -72,7 +70,7 @@ class SplashState extends State<Splash>{
   @override
   Widget build(BuildContext context) {
      return Scaffold(
-       backgroundColor: Colors.blue,
+       backgroundColor: Colors.white,
        body: Center(child: context.logoIconWidget()),
 
      );

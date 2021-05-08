@@ -9,7 +9,7 @@ import 'package:rolldicegame/utils/AppConstants.dart';
 import 'package:rolldicegame/utils/SessionUtils.dart';
 
 class DashboardUI extends StatelessWidget {
-  var userInfo = UserBloc();
+  final userInfo = UserBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class DashboardUI extends StatelessWidget {
         child: StreamBuilder<ModelUserScore>(
             stream: userInfo.userScore,
             builder: (context, snapshot) {
-              getUserLastScoreFromFirebase();
+
               var isAttemptLeft =
                   (snapshot.data != null && snapshot.data.leftChance > 0);
               return FloatingActionButton.extended(
@@ -61,7 +61,7 @@ class DashboardUI extends StatelessWidget {
           InkWell(
             onTap: () {
               context
-                  .showBottomMsgWithAction("Do you want to log out?",
+                  .showBottomMsgWithAction(context,"Do you want to log out?",
                       actionText: "Logout", dismissText: "Cancel")
                   .then((value) {
                 if (value) {
@@ -163,18 +163,26 @@ class DashboardUI extends StatelessWidget {
     context.openReplace(Splash());
   }
 
-  getUserLastScoreFromFirebase() async {
-    var currentUserID = await FirebaseAuth.instance.currentUser();
 
-    Firestore.instance
-        .collection(docPlayers)
-        .where("uid = $currentUserID")
-        .getDocuments()
-        .then((value) {
-      if (value.documents.length > 0) {
-        saveInt(sesScore, value.documents[0].data["score"]);
-        saveInt(sesLeftAttempt, 0);
-      }
-    });
+
+  // this function will get the user last history
+  // add update the view by last score
+
+  getUserLastScoreFromFirebase() async {
+
+     var userId = (await FirebaseAuth.instance.currentUser())?.uid;
+     if(userId==null){return;}
+    var value = await Firestore.instance.collection(docPlayers)
+        .document(userId).get();
+
+    print("____ ${value.data}");
+
+     if (value.data != null) {
+       await saveInt(sesScore, value.data["score"]);
+        await saveInt(sesLeftAttempt, 0);
+       userInfo.getCurrentScore();
+     }
+
+
   }
 }

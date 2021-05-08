@@ -100,22 +100,25 @@ class OtpUI extends StatelessWidget {
 
 
 
-  /// This method is used to login the user
-  /// `AuthCredential`(`_phoneAuthCredential`) is needed for the signIn method
-  /// After the signIn method from `AuthResult` we can get `FirebaserUser`(`_firebaseUser`)
-
+   /* This method is used to login the user
+  `AuthCredential`(`_phoneAuthCredential`) is needed for the signIn method
+  After the signIn method from `AuthResult` we can get `FirebaserUser`(`_firebaseUser`)
+*/
   Future<void> _login(BuildContext context) async {
-    /// get the `smsCode` from the user
+
     String smsCode = _controllerOTP.text.toString().trim();
 
     /// when used different phoneNumber other than the current (running) device
-    /// we need to use OTP to get `phoneAuthCredential` which is inturn used to signIn/login
+    /// we need to use OTP to get `phoneAuthCredential`
+    /// which is inturn used to signIn/login
     this._phoneAuthCredential = PhoneAuthProvider.getCredential(
         verificationId: verificationID, smsCode: smsCode);
     try {
       await FirebaseAuth.instance
           .signInWithCredential(this._phoneAuthCredential)
+
           .then((AuthResult authRes) {
+
 
 
         if (authRes.user != null) {
@@ -124,6 +127,7 @@ class OtpUI extends StatelessWidget {
       });
     } catch (e) {
       print(e.toString());
+      context.showBottomMsg("${e.toString()}");
     }
   }
 }

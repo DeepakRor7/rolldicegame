@@ -133,7 +133,7 @@ class LoginUI extends StatelessWidget{
 
 
 
-  Future<void> _submitPhoneNumber(BuildContext context,String phone)
+    _submitPhoneNumber(BuildContext context,String phone)
   async {
 
     String phoneNumber = "+91 " + phone;
@@ -160,7 +160,8 @@ class LoginUI extends StatelessWidget{
        /// This is called after the OTP is sent. Gives a `verificationId` and `code`
       codeSent: codeSent,
      codeAutoRetrievalTimeout: codeAutoRetrievalTimeout, verificationFailed: (AuthException error) {
-        print("Error printed ${error.message}");
+
+      context.showBottomMsg( error.message);
     },
     ); // All the callbacks are above
   }

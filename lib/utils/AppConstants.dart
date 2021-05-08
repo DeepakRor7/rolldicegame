@@ -41,6 +41,7 @@ extension widget on BuildContext {
 
   Widget logoIconWidget({title = appName}){
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
 
         Image.asset(ic_logo),
@@ -71,10 +72,12 @@ extension widget on BuildContext {
   }
 
 
-  Future<bool> showBottomMsgWithAction(msg,{String actionText = "OK", String dismissText = "Dismiss"}) async{
+  Future<bool> showBottomMsgWithAction(context,msg,
+      {String actionText = "OK", String dismissText = "Dismiss"})
+  async{
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
-        context: this,
+        context: context,
         builder: (BuildContext bc) {
           return Container(
             height: bc.height(percentage: 22),
@@ -101,10 +104,10 @@ extension widget on BuildContext {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     FlatButton(onPressed: (){
-                      Navigator.pop(this,true);
+                      Navigator.pop(context,true);
                     }, child: Text(actionText,style: TextStyle(color: Colors.red[400]))),
                     FlatButton(onPressed: (){
-                      Navigator.pop(this,false);
+                      Navigator.pop(context,false);
                     }, child: Text(dismissText,style: TextStyle(color: Colors.blue[400]),))
                   ],
                 )
@@ -115,13 +118,13 @@ extension widget on BuildContext {
   }
 
 
-  Future<bool> showBottomMsg(context, msg) async{
+  Future<bool> showBottomMsg( msg) async{
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
-        context: context,
+        context: this,
         builder: (BuildContext bc) {
           return Container(
-            height: bc.height(percentage: 22),
+            height: bc.height(percentage: 32),
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: bc.radius(topR: 40, topL: 40)),
@@ -142,7 +145,7 @@ extension widget on BuildContext {
                 ),
                 SizedBox(height: 10,),
                 FlatButton(onPressed: (){
-                  Navigator.pop(context,true);
+                  Navigator.pop(this,true);
                 }, child: Text("OK"))
               ],
             ),
