@@ -1,0 +1,119 @@
+{
+  "project_info": {
+    "project_number": "881933704607",
+    "firebase_url": "https://felo-bd382.firebaseio.com",
+    "project_id": "felo-bd382",
+    "storage_bucket": "felo-bd382.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881933704607:android:9f4f481c7415c74b2bf1aa",
+        "android_client_info": {
+          "package_name": "com.felo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "881933704607-18vm6abpqmbvp9tluu4h4vaoh6flkim8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQS-xqEEfWOygpnMEgVIwx10YQupFk7D0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "881933704607-18vm6abpqmbvp9tluu4h4vaoh6flkim8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "881933704607-v2q4mqg7oisd1ifgfo8ctoi2uu7e4716.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.felo"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881933704607:android:fd4f8a068eed3f7b2bf1aa",
+        "android_client_info": {
+          "package_name": "com.game.rolldicegame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "881933704607-18vm6abpqmbvp9tluu4h4vaoh6flkim8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQS-xqEEfWOygpnMEgVIwx10YQupFk7D0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "881933704607-18vm6abpqmbvp9tluu4h4vaoh6flkim8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "881933704607-v2q4mqg7oisd1ifgfo8ctoi2uu7e4716.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.felo"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881933704607:android:11d9fe34ae7037fb2bf1aa",
+        "android_client_info": {
+          "package_name": "com.usha.usha_lasm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "881933704607-18vm6abpqmbvp9tluu4h4vaoh6flkim8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQS-xqEEfWOygpnMEgVIwx10YQupFk7D0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "881933704607-18vm6abpqmbvp9tluu4h4vaoh6flkim8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "881933704607-v2q4mqg7oisd1ifgfo8ctoi2uu7e4716.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.felo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
