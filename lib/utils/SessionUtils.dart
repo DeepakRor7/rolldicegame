@@ -2,9 +2,12 @@
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-var sesPhoneNumber = "phoneNumber";
-var sesIsLogin = "isLogin";
-var sesProfileInfo = "sesProfileInfo";
+var sesScore = "score";
+var sesLeftAttempt= "leftAttempt";
+
+
+
+
 
 
 
@@ -20,6 +23,11 @@ saveString(String key, String value) async {
 saveBool(String key, bool value) async {
   SharedPreferences preferences = await _prefs;
   preferences.setBool(key, value);
+}
+
+saveInt(String key, int value) async {
+  SharedPreferences preferences = await _prefs;
+  preferences.setInt(key, value);
 }
 
 
@@ -39,7 +47,9 @@ getSessionB(String key) async{
 removeSession() async{
 
   SharedPreferences preferences = await _prefs;
-  preferences.clear();
+  await preferences.remove(sesScore);
+  await preferences.remove(sesLeftAttempt);
+  //await preferences.clear();
 
 
 

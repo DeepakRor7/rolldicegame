@@ -29,7 +29,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   firebase_core:  ^0.4.4
-
+  cloud_firestore: ^0.13.3
   firebase_auth: ^0.15.0
   shared_preferences: ^0.5.6+3
   rxdart: ^0.24.1
@@ -52,6 +52,12 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/ic_logo.png
+    - assets/images/dice1.png
+    - assets/images/dice2.png
+    - assets/images/dice3.png
+    - assets/images/dice4.png
+    - assets/images/dice5.png
+    - assets/images/dice6.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

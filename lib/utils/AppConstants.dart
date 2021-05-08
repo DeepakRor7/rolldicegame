@@ -6,11 +6,15 @@ import 'package:flutter/material.dart';
 // Colors
 const  appPrimaryColor = Colors.blue;
 
-// Strings
+// values
 const appName = "Roll Dice";
+const totalAttempts = 10;
+const docPlayers = "Players";
 
 //icons
 const ic_logo = "assets/images/ic_logo.png";
+
+
 
 
 //Extentions
