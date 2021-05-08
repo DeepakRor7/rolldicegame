@@ -2,7 +2,7 @@
     package="com.game.rolldicegame">
    <application
        android:name="androidx.multidex.MultiDexApplication"
-        android:label="rolldicegame"
+        android:label="Roll Dice"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
