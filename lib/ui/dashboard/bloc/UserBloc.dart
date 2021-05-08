@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:rolldicegame/models/ModelScore.dart';
+import 'package:rolldicegame/utils/AppConstants.dart';
 import 'package:rolldicegame/utils/SessionUtils.dart';
 import 'package:rxdart/subjects.dart';
 
@@ -26,7 +27,7 @@ class UserBloc {
   getCurrentScore() async {
     var user = ModelUserScore();
     user.totalScore = await getSession(sesScore) ?? 0;
-    user.leftChance = await getSession(sesLeftAttempt) ?? 0;
+    user.leftChance = await getSession(sesLeftAttempt) ?? totalAttempts;
     _userScore.sink.add(user);
   }
 
@@ -35,7 +36,7 @@ class UserBloc {
 
     await saveInt(sesScore, (await getSession(sesScore)?? 0) + score);
     await saveInt(
-        sesLeftAttempt, (await getSession(sesLeftAttempt)?? 0 ) + 1);
+        sesLeftAttempt, (await getSession(sesLeftAttempt)?? totalAttempts ) - 1);
     _score.sink.add(score);
     getCurrentScore();
   }

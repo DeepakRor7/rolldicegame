@@ -39,14 +39,14 @@ extension widget on BuildContext {
         topLeft: Radius.circular(topL),
       );
 
-  Widget logoIconWidget(){
+  Widget logoIconWidget({title = appName}){
     return Column(
       children: [
 
         Image.asset(ic_logo),
         SizedBox(height: 20,),
 
-        Text(appName,style: TextStyle(fontSize: 22),),
+        Text(title,style: TextStyle(fontSize: 22),),
       ],
     );
   }

@@ -12,18 +12,14 @@ class LeaderScoreBoardUI extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-
+    bloc.getScoreBoardList();
     return Scaffold(
 
       appBar: AppBar(automaticallyImplyLeading: true,
       title: Text("Leader Board"),
       ),
-      floatingActionButton: FloatingActionButton.extended(label: Text("data"), onPressed: () {
 
-        bloc.getScoreBoardList();
-
-      },),
-      body: viewLeaderView( context),
+      body: Center(child: viewLeaderView( context)),
 
     );
 
@@ -57,11 +53,7 @@ Widget  viewLeaderView(BuildContext context) {
             );
 
           },itemCount: snapshot.data.length,),
-        ) :Center(
-
-          child: context.logoIconWidget(),
-
-        );
+        ) : context.logoIconWidget(title: "Loading");
       }
     );
 

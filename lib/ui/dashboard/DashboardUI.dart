@@ -15,26 +15,28 @@ class DashboardUI extends StatelessWidget {
   Widget build(BuildContext context) {
     userInfo.getCurrentUser();
     userInfo.getCurrentScore();
+    getUserLastScoreFromFirebase();
 
     return Scaffold(
+      backgroundColor: Colors.blue[50],
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(8.0),
         child: StreamBuilder<ModelUserScore>(
             stream: userInfo.userScore,
             builder: (context, snapshot) {
-
-              var isAttemptLeft = (snapshot.data != null &&
-                  snapshot.data.leftChance < totalAttempts);
+              getUserLastScoreFromFirebase();
+              var isAttemptLeft =
+                  (snapshot.data != null && snapshot.data.leftChance > 0);
               return FloatingActionButton.extended(
                 label: Text(isAttemptLeft ? "Roll Now" : "View Leader Board"),
                 onPressed: () {
                   if (isAttemptLeft) {
                     userInfo.rollDice();
-                    if (snapshot.data.leftChance == totalAttempts) {
+                    if (snapshot.data.leftChance == 1) {
                       saveScore();
-                    } else {
-                      context.open(LeaderScoreBoardUI());
                     }
+                  } else {
+                    context.open(LeaderScoreBoardUI());
                   }
                 },
               );
@@ -58,19 +60,14 @@ class DashboardUI extends StatelessWidget {
                   child: Icon(Icons.leaderboard_sharp))),
           InkWell(
             onTap: () {
-              context.showBottomMsgWithAction("Do you want to log out?",
-              actionText: "Logout",
-                dismissText: "Cancel"
-              ).then((value) {
-                if(value){
+              context
+                  .showBottomMsgWithAction("Do you want to log out?",
+                      actionText: "Logout", dismissText: "Cancel")
+                  .then((value) {
+                if (value) {
                   logoutCurrentUser(context);
-
-
-
                 }
-
               });
-
             },
             child: Tooltip(
               message: "Logout",
@@ -99,11 +96,40 @@ class DashboardUI extends StatelessWidget {
             StreamBuilder<ModelUserScore>(
                 stream: userInfo.userScore,
                 builder: (context, snapshot) {
-                  return Column(
-                    children: [
-                      Text("Current Score ${snapshot.data?.totalScore}"),
-                      Text("Attempt left ${snapshot.data?.leftChance}"),
-                    ],
+                  return Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(30.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                Text(
+                                  "${snapshot.data?.totalScore}",
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                Text("Your Score"),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  "${snapshot.data?.leftChance}",
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                Text("Roll Left"),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   );
                 }),
           ],
@@ -112,6 +138,10 @@ class DashboardUI extends StatelessWidget {
     );
   }
 
+  /*
+  * When no attempts left then get
+  * score from session and save to firebase
+  * */
   Future<void> saveScore() async {
     //firebase auth instance to get uuid of user
     FirebaseUser auth = await FirebaseAuth.instance.currentUser();
@@ -123,11 +153,28 @@ class DashboardUI extends StatelessWidget {
     return;
   }
 
-    logoutCurrentUser(BuildContext context) async{
+  /*
+  * Clear session and remove
+  * firebase user session
+  */
+  void logoutCurrentUser(BuildContext context) async {
+    await removeSession();
+    await FirebaseAuth.instance.signOut();
+    context.openReplace(Splash());
+  }
 
-     await removeSession();
-     await FirebaseAuth.instance.signOut();
-     context.openReplace(Splash());
+  getUserLastScoreFromFirebase() async {
+    var currentUserID = await FirebaseAuth.instance.currentUser();
 
-    }
+    Firestore.instance
+        .collection(docPlayers)
+        .where("uid = $currentUserID")
+        .getDocuments()
+        .then((value) {
+      if (value.documents.length > 0) {
+        saveInt(sesScore, value.documents[0].data["score"]);
+        saveInt(sesLeftAttempt, 0);
+      }
+    });
+  }
 }
